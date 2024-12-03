@@ -3,6 +3,7 @@ package web.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -24,6 +25,7 @@ import java.util.Properties;
 @EnableJpaRepositories("web.dao")
 @Configuration
 @PropertySource("classpath:db.properties")
+@ComponentScan(basePackages = "web")
 public class HibernateConfig {
 
    private final Environment env;
@@ -59,9 +61,12 @@ public class HibernateConfig {
 
    private Properties hibernateProperties() {
       Properties properties = new Properties();
-      properties.put("hibernate.dialect", env.getRequiredProperty("hibernate.dialect")); // Исправлено
+      properties.put("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
       properties.put("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
       properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+
+
+      properties.forEach((key, value) -> System.out.println(key + ": " + value));
       return properties;
    }
 

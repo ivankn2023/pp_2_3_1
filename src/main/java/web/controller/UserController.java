@@ -24,7 +24,6 @@ public class UserController {
 
     @GetMapping("/")
     public String mainView(ModelMap model) {
-        System.out.println("qwe");
         List<User> users = userService.listUsers();
         model.addAttribute("users", users);
         return "users";
@@ -39,7 +38,7 @@ public class UserController {
     @PostMapping("/delete")
     public String deleteUser(@RequestParam int id) {
         System.out.println(id);
-        //userService.removeUserById(id);
+        userService.deleteUser(id);
         return "redirect:/users/";
     }
 
